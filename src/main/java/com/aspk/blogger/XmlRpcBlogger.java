@@ -1,4 +1,7 @@
 package com.aspk.blogger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.*;
+import org.jsoup.select.Elements;
 
 public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
     /* {src_lang=Java}*/
@@ -16,11 +19,21 @@ public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
     // works line a template method
     public void push(Artical art) {
         // HtmlParser parser = new HtmlParser(art.getContent());
+        Document doc = Jsoup.parse(art.getContent());
+        Elements imgs = doc.getElementsByTag("img");
 
-        // parser.iterateElement(actionUploadFile);
+        // System.out.println("Html content: " + doc.outerHtml());
 
-        // xmlRpc.uploadContent(parser.getText());
-        xmlRpc.uploadContent(art.getContent());
+        for (Element img : imgs) {
+            String imgSrc = img.attr("src");
+            String url = xmlRpc.uploadFile(art.getMediaRootDir() +"/"+ imgSrc);
+            System.out.println("change image src "+imgSrc + " to " + url);
+            img.attr("src", url);
+        }
+
+        // System.out.println("Html content: " + doc.outerHtml());
+
+        xmlRpc.uploadContent(doc.outerHtml());
     }
 
     // Sub class should implement below two methods.

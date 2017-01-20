@@ -1,0 +1,12 @@
+* Aspk blogger
+** upload a html file and its image completed
+   <2017-01-20 Fri 14:00>
+   1. how to run
+      ./run.sh
+      The ./a-test-artical/index.html will be uploaded to my wordpress site.
+   2. first upload all img tag src files, then upload the content.
+      Use jsoup to get the src attribute of a img tag, and replect it with the new url.
+      use jwordpress to upload file and content to wordpress.
+   3. Error handling is not process now
+   4. How to find the image path?
+      it is the mediaRootDir + the src property.

@@ -24,6 +24,8 @@ public class WordpressXmlRpcClient  implements XmlRpcClient {
     {
         int postId = -1;
         Post recentPost = new Post();
+
+
         recentPost.setPost_title("No title");
         recentPost.setPost_content(content);
         recentPost.setPost_status("publish");
@@ -31,17 +33,30 @@ public class WordpressXmlRpcClient  implements XmlRpcClient {
         //TODO: convert the content, so that all local media are all first be uploaded, and the url be replaced.
 
         try {
+            System.out.println("upload content...");
             postId = wordpress.newPost(recentPost);
             System.out.println("new post page id: " + postId);
         } catch (Exception ex) {
-            System.out.println("post failed. ex: " + ex);
+            System.out.println("Error: post failed. ex: " + ex);
         }
 
         return postId;
     }
 
-    public String uploadFile(File file){
-        return "aaa";
-    }
+    public String uploadFile(String file){
+        try {
+            MediaItemUploadResult rst;
+            InputStream in = new FileInputStream(file);
+            System.out.println("upload file..." + file);
+            rst = wordpress.uploadFile(in, file.replaceAll("/", "-"));
 
+            // System.out.println("upload result: "+rst.getUrl()+" "+rst.getFile() + " "+rst.getId());
+            System.out.println("upload result: "+rst);
+
+            return rst.getUrl();
+        } catch (Exception ex) {
+            System.out.println("Error: upload file failed. ex: " + ex);
+            return "No-link";
+        }
+    }
 }
