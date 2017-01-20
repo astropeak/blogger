@@ -1,6 +1,6 @@
 package com.aspk.blogger;
 
-abstract public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
+public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
     /* {src_lang=Java}*/
 
     XmlRpcClient xmlRpc;

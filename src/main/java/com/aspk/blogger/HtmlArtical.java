@@ -9,8 +9,11 @@ public class HtmlArtical implements Artical {
     String content;
     String title;
     public HtmlArtical(String content) {
+        this(content, "No title");
+    }
+    public HtmlArtical(String content, String title) {
         this.content = content;
-        this.title = "No title";
+        this.title = title;
     }
     public String getContent() {
         // String content = new String(Files.readAllBytes(Paths.get(file)));

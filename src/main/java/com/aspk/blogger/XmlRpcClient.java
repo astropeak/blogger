@@ -4,6 +4,6 @@ import java.io.File;
 
 public interface XmlRpcClient  {
   /* {src_lang=Java}*/
-    void uploadContent(String content);
+    int uploadContent(String content);
     String uploadFile(File file);
 }
