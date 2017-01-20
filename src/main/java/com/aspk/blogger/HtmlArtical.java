@@ -9,21 +9,22 @@ public class HtmlArtical implements Artical {
     String content;
     String title;
     String mediaRootDir;
+    HtmlRenderer renderer;
     public HtmlArtical(String content) {
-        this(content, ".", "No title");
+        this(content, ".", "No title", new HtmlRenderer());
     }
 
     public HtmlArtical(String content, String mediaRootDir) {
-        this(content,  mediaRootDir, "No title");
+        this(content,  mediaRootDir, "No title", new HtmlRenderer());
     }
-    public HtmlArtical(String content, String mediaRootDir, String title) {
-        this.content = content;
+    public HtmlArtical(String content, String mediaRootDir, String title, HtmlRenderer renderer) {
+        this.content =  content;
         this.title = title;
         this.mediaRootDir = mediaRootDir;
+        this.renderer = renderer;
     }
     public String getContent() {
-        // String content = new String(Files.readAllBytes(Paths.get(file)));
-        return content;
+        return renderer.render(content);
     }
 
 
