@@ -12,6 +12,9 @@ import java.io.*;
 import java.net.*;
 import redstone.xmlrpc.*;
 
+/**
+ * wordpress's native xmlrpc client. Only works for wordpress
+ */
 public class WordpressXmlRpcClient  implements XmlRpcClient {
     /* {src_lang=Java}*/
     Wordpress wordpress;

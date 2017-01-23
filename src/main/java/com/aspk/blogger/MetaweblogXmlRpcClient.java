@@ -20,6 +20,10 @@ import org.apache.commons.io.IOUtils;
 // import org.apache.commons.codec.binary.Base64;
 import java.util.Base64;
 
+/**
+ * Metaweblog xmlrpc client. Now works for wordpress and cnblogs.
+ */
+
 public class MetaweblogXmlRpcClient  implements XmlRpcClient {
     /* {src_lang=Java}*/
     // MetaWeblog metaweblog;

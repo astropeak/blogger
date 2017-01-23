@@ -4,7 +4,9 @@ import org.commonmark.parser.Parser;
 // import org.commonmark.renderer.html.HtmlRenderer;
 
 
-// Render  content in other type to html
+/**
+ * Render markdown to html
+ */
 public class Markdown2HtmlRenderer extends HtmlRenderer {
     /* {src_lang=Java}*/
     String render(String markdown) {

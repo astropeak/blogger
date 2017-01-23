@@ -3,6 +3,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 
+/**
+ * Represent a xmlrpc(metaweblog) based blogging server.
+ * Use XmlRpcClient to contact to the server
+ */
+
 public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
     /* {src_lang=Java}*/
 
@@ -17,6 +22,9 @@ public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
     }
 
     // works line a template method
+    /**
+     * First upload all images of the artical, then upload the content. Image's path is in artical's img tag.
+     */
     public void push(Artical art) {
         // HtmlParser parser = new HtmlParser(art.getContent());
         Document doc = Jsoup.parse(art.getContent());

@@ -1,12 +1,16 @@
 package com.aspk.blogger;
 
-/** 
+/**
  *  Push an artical to somewhere, e.g. wordpress.
  */
 public interface Pusher {
-  /* {src_lang=Java}*/
+    /* {src_lang=Java}*/
 
 
-  public void push(Artical art);
+    /**
+       Push an artical to somewhere.
+       @param art  The artical that should be pushed
+    */
+    public void push(Artical art);
 
 }

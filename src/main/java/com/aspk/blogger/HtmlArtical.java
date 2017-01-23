@@ -2,6 +2,10 @@ package com.aspk.blogger;
 
 import java.util.Map;
 import java.nio.file.*;
+
+/**
+   A simple implementation of html artical. Use HtmlRenderer to render the content to html content
+*/
 public class HtmlArtical implements Artical {
     /* {src_lang=Java}*/
 
