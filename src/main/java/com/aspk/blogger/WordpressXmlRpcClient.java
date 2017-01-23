@@ -15,6 +15,11 @@ import redstone.xmlrpc.*;
 public class WordpressXmlRpcClient  implements XmlRpcClient {
     /* {src_lang=Java}*/
     Wordpress wordpress;
+    public WordpressXmlRpcClient (Account account) throws MalformedURLException{
+        this(account.getUsername(), account.getPassword(), account.getXmlRpcUrl());
+    }
+
+
     public WordpressXmlRpcClient (String username, String password, String xmlRpcUrl) throws MalformedURLException{
         this.wordpress = new Wordpress(username, password, xmlRpcUrl);
     }

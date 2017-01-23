@@ -10,3 +10,112 @@
    3. Error handling is not process now
    4. How to find the image path?
       it is the mediaRootDir + the src property.
+** similar software
+   1. MWeb
+      http://zh.mweb.im/index.html
+      号称Mac 下唯一支持 metaweblog api的markdown editor.
+      目前支持上传到wordpress, sina, cnblog等网站的功能。
+      
+** issues
+*** XmlRpcClient's uploadContent support title and category
+    Should I use artical as parameter?
+*** DONE add cnblogs support
+    CLOSED: [2017-01-23 Mon 14:38]
+    - State "DONE"       from "STARTED"    [2017-01-23 Mon 14:38] \\
+      The codes works.
+      The class is MetaweblogXmlRpcClient.
+      The implementation now is bad.
+      
+      有很多小细节需要积累，如将文件内容转换为Base64的byte array. 开始在网上搜到的方法不工作，后来从wordpress-java中找到了。
+      从开源代码中积累代码库非常重要。包括maven dependency 及package。
+    - State "STARTED"    from ""           [2017-01-23 Mon 09:31]
+    :LOGBOOK:  
+    CLOCK: [2017-01-23 Mon 09:31]--[2017-01-23 Mon 11:40] =>  2:09
+    :END:      
+    :PROPERTIES:
+    :Effort:   90
+    :END:
+**** Error: cnblogs doesn't support uploadFile and newPost api
+     implemented Account interace and CnblogsAccount class, and use WordpressXmlRpcClient as  cnblogs xmlrpc client. But seems problems.
+
+     The console output
+     #+BEGIN_SRC text
+upload file...a-test-markdown-artical/images/markdownwriterfx.png
+
+Error: upload file failed. ex: redstone.xmlrpc.XmlRpcFault: unsupported method called: wp.uploadFile
+change image src images/markdownwriterfx.png to No-link
+upload file...a-test-markdown-artical/images/screenshot.png
+
+
+Error: upload file failed. ex: redstone.xmlrpc.XmlRpcFault: unsupported method called: wp.uploadFile
+change image src images/screenshot.png to No-link
+upload content...
+Error: post failed. ex: redstone.xmlrpc.XmlRpcFault: unsupported method called: wp.newPost
+
+     #+END_SRC
+
+     To upload a media file, cnblogs use  "metaWeblog.newMediaObject" API.
+     #+NAME: no-name
+     #+begin_src elisp
+(defun cnblogs-metaweblog-new-media-object (media-object);todo: 失败返回nil
+  "media-object是一个struct，返回媒体文件的URL"
+  (cdr (car (xml-rpc-method-call-media-object cnblogs-server-url
+		       "metaWeblog.newMediaObject"
+		       cnblogs-blog-id
+		       cnblogs-user-name
+		       cnblogs-user-passwd
+		       media-object
+		       ))))
+
+
+     #+end_src
+
+     And create a new post is "metaWeblog.newPost".
+     #+NAME: no-name
+     #+begin_src elisp
+     (defun cnblogs-metaweblog-new-post (post publishp)
+      (xml-rpc-method-call cnblogs-server-url
+                   "metaWeblog.newPost"
+                   cnblogs-blog-id
+                   cnblogs-user-name
+                   cnblogs-user-passwd
+                   post
+                   publishp))
+
+    #+end_src
+
+     So the problem is: cnglobs 
+     1. expect "metaWeblog.newPost", but  get "wp.newPost";
+     2. expect "metaWeblog.newMediaObject", but get "wp.uploadFile".
+**** foke wordpress-java, and make it support cnblogs.
+     wordpress has two version of api, wordpress and metaweblog:
+     wordpress xmlrpc wordpress api doc
+     https://codex.wordpress.org/XML-RPC_WordPress_API 
+     wordpress xmlrpc metaweblog api doc
+     https://codex.wordpress.org/XML-RPC_MetaWeblog_API
+
+     wordpress-java use the first api. So it not works with cnblogs.
+**** this project implement metaweblog api in java: wordpress-xmlrpc-mwa-java
+     The wordpress in name is bad, should be removed.
+
+     So I should use this one.
+
+     After using the project, it is really sucks. I should not waste time on it anymore.
+     But I find it use apache's XmlRpcClient as the backend software, So might I should try this insteaded.
+     #+begin_src java :classname Test
+     import org.apache.xmlrpc.XmlRpcException;
+     import org.apache.xmlrpc.client.XmlRpcClient;
+     import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
+     #+end_src
+**** learn apache xmlrpc client and use it in project.
+     https://ws.apache.org/xmlrpc/apidocs/org/apache/xmlrpc/client/package-summary.html
+
+     My uploaded image can't be displayed propertyly:
+     http://images2015.cnblogs.com/blog/571143/201701/571143-20170123141546612-780862300.png
+
+     This one wordks.
+     http://images2015.cnblogs.com/blog/571143/201612/571143-20161218163803808-1150239205.png
+
+     The root cause is the bits is wrong:
+            m.put("bits", Base64.getEncoder().encode(IOUtils.toByteArray(in)));
+      Thenn I copy codes from wordpress-java, and it works.
