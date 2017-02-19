@@ -41,7 +41,7 @@ public class XmlRpcBlogger extends Blogger implements Pusher, Fetcher {
 
         // System.out.println("Html content: " + doc.outerHtml());
 
-        xmlRpc.uploadContent(doc.outerHtml());
+        xmlRpc.uploadContent(doc.outerHtml(), art.getTitle());
     }
 
     // Sub class should implement below two methods.

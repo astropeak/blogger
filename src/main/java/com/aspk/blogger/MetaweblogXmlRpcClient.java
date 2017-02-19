@@ -1,24 +1,19 @@
 package com.aspk.blogger;
 
-import java.io.File;
-
 import java.util.*;
 import java.io.*;
 import java.net.*;
-import redstone.xmlrpc.*;
 
 // import wp.xmlrpc.mwa.bean.*;
 // import wp.xmlrpc.mwa.client.*;
 // import wp.xmlrpc.mwa.enums.*;
 // import wp.xmlrpc.mwa.exception.*;
 
-import org.apache.xmlrpc.XmlRpcException;
 // import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
-import org.apache.commons.io.IOUtils;
 // import org.apache.commons.codec.binary.Base64;
-import java.util.Base64;
+
 
 /**
  * Metaweblog xmlrpc client. Now works for wordpress and cnblogs.
@@ -47,7 +42,7 @@ public class MetaweblogXmlRpcClient  implements XmlRpcClient {
         xmlRpcConfig.setServerURL(new URL(xmlRpcUrl));
     }
 
-    public int uploadContent (String content)
+    public int uploadContent(String content, String title)
     // throws InsufficientRightsException, net.bican.wordpress.exceptions.InvalidArgumentsException, net.bican.wordpress.exceptions.ObjectNotFoundException, redstone.xmlrpc.XmlRpcFault
     {
         // String postId = "-1";
@@ -74,7 +69,7 @@ public class MetaweblogXmlRpcClient  implements XmlRpcClient {
         // Params needed: blogid, username, password, struct, publish
         // First create the fourth parameter, struct:
         Map<String, String> m = new HashMap<String, String>();
-        m.put("title", "Hello World ");
+        m.put("title", title);
         // m.put("link", "http://www.indiwiz.com/");
         m.put("description", content);
  

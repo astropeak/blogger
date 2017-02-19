@@ -1,7 +1,5 @@
 package com.aspk.blogger;
 
-import java.io.File;
-
 /**
  * Represent a client part to a xmlrpc server.
  */
@@ -10,9 +8,10 @@ public interface XmlRpcClient  {
     /**
      * upload content to a xmlrpc server. metaweblog.newPost. TODO: add more parameters, such as title
      * @param content  this is the html text that will be uploaded. It is the description field in the API
+     * @param title
      * @return int the post id
      */
-    int uploadContent(String content);
+    int uploadContent(String content, String title);
     /**
      * Upload a file. metaweblog.newMediaObject
      * @param file  the file path to be uploaded.

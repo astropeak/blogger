@@ -1,16 +1,9 @@
 package com.aspk.blogger;
 
-import java.io.File;
-
 import net.bican.wordpress.*;
-import net.bican.wordpress.configuration.*;
-import net.bican.wordpress.example.*;
-import net.bican.wordpress.exceptions.*;
-import net.bican.wordpress.util.*;
-import java.util.*;
+
 import java.io.*;
 import java.net.*;
-import redstone.xmlrpc.*;
 
 /**
  * wordpress's native xmlrpc client. Only works for wordpress
@@ -27,14 +20,14 @@ public class WordpressXmlRpcClient  implements XmlRpcClient {
         this.wordpress = new Wordpress(username, password, xmlRpcUrl);
     }
 
-    public int uploadContent (String content)
+    public int uploadContent(String content, String title)
     // throws InsufficientRightsException, net.bican.wordpress.exceptions.InvalidArgumentsException, net.bican.wordpress.exceptions.ObjectNotFoundException, redstone.xmlrpc.XmlRpcFault
     {
         int postId = -1;
         Post recentPost = new Post();
 
 
-        recentPost.setPost_title("No title");
+        recentPost.setPost_title(title);
         recentPost.setPost_content(content);
         recentPost.setPost_status("publish");
 
